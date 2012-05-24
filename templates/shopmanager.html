@@ -1,0 +1,55 @@
+{% extends "basic.html" %}
+{% block status %}
+{% if session.logged_in %}
+<ul class="nav pull-right">
+  <li><a href="#" style="fontsize:20px">{{ session.username }}</a></li>
+  <li><a href="/signout">Sign out</a></li>
+</ul>
+{% else %}
+<ul class="nav pull-right">
+  <li><a href="/signin">Sign in</a></li>
+  <li><a href="/register">Register</a></li>
+</ul>
+{% endif %}
+{% endblock status %}
+
+
+{% block name %}
+{% if session.logged_in %}
+Hi, <a href="#">{{ session.username }}.</a>
+{% endif %}
+{% endblock name %}
+
+
+{% block body %}
+{% if session.logged_in %}
+<h2>Hey, <a href="#">{{ session.username }}.</a>&nbsp;&nbsp;There is(are)
+    <span style="color:green">{{ number }}</span> shop(s) in your shopcart, and total price is 
+    <span style="color:green">{{ session.total }}</span> ￥.</h2>
+<hr>
+<table class="table">
+    <thead>
+        <tr>
+            <th style="text-align:center">ID</th>
+            <th style="text-align:center">NAME</th>
+            <th style="text-align:center">PRICE</th>
+            <th style="text-align:center">NUMBER</th>
+            <th style="text-align:center">DELETE</th>
+            <th style="text-align:center">CHECK</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for entry in entries %}
+        <tr>
+            <td style="text-align:center">{{ entry.orderid }}</td>
+            <td style="text-align:center"><a href="/shopmessage?shopname={{ entry.shopname }}">{{ entry.shopname }}</a></td>
+            <td style="text-align:center">{{ entry.shopprice }}</td>
+            <td style="text-align:center">{{ entry.shopquantity }}</td>
+            <td style="text-align:center"><a href="/deleteshop?shopid={{ entry.shopid }}">delete</a></td>
+            <td style="text-align:center">{{ entry.entryprice }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endif %}
+{% endblock body %}

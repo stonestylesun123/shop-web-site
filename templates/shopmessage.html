@@ -1,0 +1,78 @@
+{% extends "basic.html" %}
+{% block status %}
+{% if session.logged_in %}
+<ul class="nav pull-right">
+  <li><a style="fontsize:20px" href="#">{{ session.username }}</a></li>
+  <li><a href="/signout">Sign out</a></li>
+</ul>
+{% else %}
+<ul class="nav pull-right">
+  <li><a href="/signin">Sign in</a></li>
+  <li><a href="/register">Register</a></li>
+</ul>
+{% endif %}
+{% endblock status %}
+
+
+{% block name %}
+{% if session.logged_in %}
+Hi, <a href="#">{{ session.username }}.</a>
+{% endif %}
+{% endblock name %}
+
+
+{% block body %}
+<div class="container">
+  <div class="alert alert-error span8" style="opacity:.9;margin:0px;">
+  {% for entry in entries %}
+    <img src="../static/img/book.png" class="span3">
+    <h2>{{ entry.shopname }}</h2>
+    <h3>Price: {{ entry.shopprice }} RMB</h3>
+    <h3>Tag: <code>{{ entry.tag }}</code></h3>
+    <span class="label label-important" style="margin:15px;margin-left:0px">
+      {% for i in entry.shopstar %}
+      <i class="icon-heart"></i>
+      {% endfor %}
+    </span><br>
+    <form id="form" action="/addshop" method="post">
+      <input id="quantity" onblur="checkout();" class="input-text text" style="width:22px;margin-top:8px;margin-left:0px;text-align:center" type="text" maxlength="3" value="1" name="quantity">
+      <button id="submit" name="id" value={{ entry.id }} class="btn btn-success" style="margin:5px;margin-left:0px">Add to shopcart!</button>
+      <span id="error" style="display:none" class="label label-important">Invalid Input!</span>
+    </form>
+    <hr><h4>{{ entry.shopdes }}</h4>
+  </div>
+  {% endfor %}
+  <div class="span3" style="margin-left:70px">
+    <div class="well" style="opacity:.6;overflow:hidden;">
+        {%if session.logged_in %}
+        <h3 style="margin-left:5px">Hi, <a href="#">{{ session.username }}!</a>&nbsp;&nbsp;Total:&nbsp; 
+          <span style="color:green">{% if session.total %}{{ session.total }}{% else %}0{% endif %}</span> RMB<h3>
+        {% else %}
+        <h3 style="margin-left:5px">Please <a href="/signin">sign in!</a></h3>
+        {% endif %}
+        <a href="/shopcar"><img src="../static/img/shopcart.png" alt="shopcart" style="float:left"></a>
+        {%if session.logged_in %}
+        <a href="/shopmanager"><button class="btn" style="margin:7px;margin-top:25px"><i class="icon-shopping-cart"></i> Shopcar</button></a>
+        <a href=""><button class="btn" style="margin:3px"><i class="icon-pencil"></i> Checkout</button></a>
+        {% endif %}
+    </div>
+  <div>
+</div>
+
+<script language="JavaScript" type="text/javascript">
+    function checkout() {
+        var quantity = document.getElementById("quantity");
+        if (isInteger(quantity.value)) {
+            document.getElementById("error").style.display = "none";
+            document.getElementById("submit").removeAttribute("disabled");
+        } else {
+            document.getElementById("error").style.display = "";
+            document.getElementById("submit").disabled = "true";
+        }
+    }
+    function isInteger( str ){
+        var regu = /^[-]{0,1}[0-9]{1,}$/;
+        return regu.test(str);
+    }
+</script>
+{% endblock body %}

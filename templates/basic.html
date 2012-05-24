@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="content-type" content="text/html">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/bootstrap.css') }}">
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/bootstrap-responsive.css') }}">
+    
+    <title>Legooo</title>
+
+    <style type="text/css">
+      body {
+        padding-top: 60px;
+        padding-bottom: 40px;
+        background-image: url("{{ url_for('static', filename='img/bk.png') }}");
+        background-attachment: fixed;
+        background-position: right;
+      }
+      .shop {
+        width: 24%;
+        position: relative;
+        text-align: center;
+        display: inline-block;
+        vertical-align: top;
+      }
+      .shop > img {
+        margin-left: 0px;
+        margin-bottom: 20px;
+        margin-top: 20px;
+        margin-right: 20px;
+        padding: 0px;
+        border-radius: 5px;
+        border: solid 1px #a9a9a9;
+      }
+    </style>
+  </head>
+
+  <body data-spy="scroll" data-target=".subnav" data-offset="50">
+
+    <div class="navbar navbar-fixed-top" style="opacity:.9;font-weight:bold">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand" href="/home" style="color:#4274CC">Legooo</a>
+          <div class="nav-collapse span5">
+            {% block bar %}
+            <ul class="nav">
+              <li id="li-home"><a href="/home">Home</a></li>
+              <li id="li-shop"><a href="/shop">Shop</a></li>
+              <li id="li-about"><a href="/about">About</a></li>
+              <li id="li-contact"><a href="/contact">Contact</a></li>
+            </ul>
+            {% endblock bar %}
+          </div>
+          <form action="/search" method="get" style="margin:0px;padding:0px" class="span4">
+          <input name="tag" class="input-medium search-query" type="text" style="margin:0px;margin-top: 3px;background-color:#aaaaaa;color:black" placeholder="Search..">
+          <button type="submit" class="btn"><i class="icon-bookmark"></i> Search</button>
+          </form>
+          {% block status %}
+          <ul class="nav pull-right span1">
+            <li><a href="/signin">Sign in</a></li>
+            <li><a href="/register">Register</a></li>
+          </ul>
+          {% endblock status %}
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      
+      <div class="hero-unit" style="opacity: .8;">
+        {% block title %}
+        <h1 style="text-align:center">{% block name %}{% endblock name %}Welcome to Legooo!</h1>
+        <p style="text-align:center">why not try search "human".. "child".. "javascript".. "food.."</p>
+        {% endblock title %}
+        {% block head %}
+        {% endblock head %}
+      </div>
+    </div>
+    
+    <div class="container">
+    {% block body %}{% endblock body %}
+    </div>
+
+    <div class="container" style="overflow:hidden">
+      <footer style="text-align:center"><p>© <a href="github.com/stonestylesun123">Sidong Huang</a> 2012</p></footer>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/jquery.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap-transition.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap-alert.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap-modal.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap-dropdown.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap-scrollspy.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap-tab.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap-tooltip.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap-popover.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap-button.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap-collapse.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap-carousel.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap-typeahead.js') }}"></script>
+  </body>
+</html>

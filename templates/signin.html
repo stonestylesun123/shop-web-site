@@ -1,0 +1,49 @@
+{% extends "basic.html" %}
+
+{% block status %}
+{% if session.logged_in %}
+<ul class="nav pull-right">
+  <li><a style="fontsize:20px" hred="#">{{ session.username }}</a></li>
+  <li><a href="/signout">Sign out</a></li>
+</ul>
+{% else %}
+<ul class="nav pull-right">
+  <li id="li-signin"><a href="/signin">Sign in</a></li>
+  <li><a href="/register">Register</a></li>
+</ul>
+{% endif %}
+{% endblock status %}
+
+
+{% block title %}
+<h1 style="text-align:center">{% block name %}{% endblock name %}Welcome to Legooo!</h1>
+{% endblock title %}
+
+
+{% block head %}
+<hr>
+<div class="container">
+  <div id="newaccount" class="span12">
+    <form action="/signin" method="post" class="form-inline" style="margin: 30px; margin-left: 20%">
+    <label>username:</label>
+    <input class="input-small" name="username" placeholder="username"><p style="display:inline">&nbsp;</p>
+    <label>password:</label>
+    <input class="input-small" name="password" type="password" placeholder="password"><p style="display:inline">&nbsp;</p>
+    <button id="new" type="submit" class="btn btn-primary"><i class="icon-bookmark"></i> Sign in</button>
+    {% if error %}
+    <label class="label label-important">{{ error }}</label>
+    {% endif %}
+  </form>
+</div>
+</div>
+<hr>
+{% endblock head %}
+
+
+{% block body %}
+<script type="text/javascript">
+  document.body.onload = function() {
+    document.getElementById("li-signin").className = "active"; 
+  }
+</script>
+{% endblock body %}

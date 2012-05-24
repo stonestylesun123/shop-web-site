@@ -1,0 +1,68 @@
+{% extends "basic.html" %}
+
+
+{% block status %}
+{% if session.logged_in %}
+<ul class="nav pull-right">
+  <li><a style="fontsize:20px" hred="#">{{ session.username }}</a></li>
+  <li><a href="/signout">Sign out</a></li>
+</ul>
+{% else %}
+<ul class="nav pull-right">
+  <li><a href="/signin">Sign in</a></li>
+  <li id="li-register"><a href="/register">Register</a></li>
+</ul>
+{% endif %}
+{% endblock status %}
+
+
+{% block title %}
+<h1 style="text-align:center">{% block name %}{% endblock name %}Welcome to Legooo!</h1>
+{% endblock title %}
+
+
+{% block head %}
+<hr>
+<div class="row" style="text-align:center">
+    <span class="label label-success">Tips: </span>&nbsp;username &gt;= 2 and password &gt;= 2.
+</div>
+<div class="container">
+  <div id="newaccount" class="span10">
+    <form action="/addaccount" method="post" class="form-inline" style="margin: 30px; margin-left: 20%">
+    <label>username:</label>
+    <input id="name" class="input-small" name="username" onblur="checkout()" placeholder="username"><p style="display:inline">&nbsp;</p>
+    <label>password:</label>
+    <input id="pass1" class="input-small" name="password" onblur="checkout()" type="password" placeholder="password"><p style="display:inline">&nbsp;</p>
+    <label>password again:</label>
+    <input id="pass2" class="input-small" type="password" onblur="checkout()" placeholder="password"><p style="display:inline">&nbsp;</p>
+    <button id="submit" type="submit" class="btn btn-primary" disabled="true"><i class="icon-bookmark"></i> Register</button>
+    <span id="error" style="display:none" class="label label-important">Invalid Input!</span>
+  </form>
+</div>
+</div>
+<hr>
+
+<script type="text/javascript">
+    function checkout() {
+        var name = document.getElementById('name');
+        var pass1 = document.getElementById('pass1');
+        var pass2 = document.getElementById('pass2');
+        if ((name.value.length = 0)||(pass1.value != pass2.value)||(pass1.value.length < 2)||(pass2.value.length < 2)||(name.value.length < 2)) {
+            document.getElementById("error").style.display = "";
+            document.getElementById("submit").disabled = "true";
+        } else {
+            document.getElementById("error").style.display = "none";
+            document.getElementById("submit").removeAttribute("disabled");
+        }
+    } 
+</script>
+{% endblock head %}
+
+
+{% block body %}
+<script type="text/javascript">
+  document.body.onload = function() {
+    document.getElementById("li-register").className = "active"; 
+  }
+</script>
+{% endblock body %}

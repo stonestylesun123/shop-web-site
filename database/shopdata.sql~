@@ -1,0 +1,11 @@
+drop table if exists shopdata;
+
+create table shopdata (
+    id integer primary key autoincrement,
+    shopname string not null,
+    shopprice integer not null,
+    shopstar integer not null,
+    shopdes string not null,
+    shopimglink string not null,
+    tag string not null
+);

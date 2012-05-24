@@ -1,0 +1,74 @@
+{% extends "basic.html" %}
+{% block status %}
+{% if session.logged_in %}
+<ul class="nav pull-right">
+  <li><a href="#" style="fontsize:20px">{{ session.username }}</a></li>
+  <li><a href="/signout">Sign out</a></li>
+</ul>
+{% else %}
+<ul class="nav pull-right">
+  <li><a href="/signin">Sign in</a></li>
+  <li><a href="/register">Register</a></li>
+</ul>
+{% endif %}
+{% endblock status %}
+
+
+{% block name %}
+{% if session.logged_in %}
+Hi, <a href="#">{{ session.username }}.</a>
+{% endif %}
+{% endblock name %}
+
+
+{% block body %}
+<div class="container">
+  <div class="btn-group" data-toggle="buttons-radio" style="margin-bottom:25px">
+      <a href="/shop?sort=shopstar"><button class="btn btn-success"><i class="icon-heart"></i> Loves</button></a>
+      <a href="/shop?sort=shopname"><button class="btn btn-warning"><i class="icon-fire"></i> Alphabetically</button></a>
+      <a href="/shop?sort=shopprice"><button class="btn btn-danger"><i class="icon-thumbs-up"></i> Price</button></a>
+  </div>
+  {% if search %}
+  <div class="alert alert-error">
+      <h3>The searching result for &nbsp;<span style="color:red">"{{ search }}"</span>&nbsp;...</h3>
+  </div>
+  {% endif %}
+</div>
+<div class="container">
+  <div class="span9" style="margin:0px;padding:0px">
+    {% for entry in entries %}
+    <div class="shop">
+      <img src="{{ url_for('static', filename="img/book.png") }}" alt="{{ entry.shopname }}">
+      <a href="shopmessage?shopname={{ entry.shopname }}"><code style="fontsize:30px">{{ entry.shopname }}</code></a><br>
+      <span class="label label-important">
+        {% for i in entry.shopstar %}
+        <i class="icon-heart"></i>
+        {% endfor %}
+      </span><br>
+      <span class="label label-success">{{ entry.shopprice }} RMB</span>
+    </div> 
+    {% endfor %}
+  </div>
+  <div class="span3">
+    <div class="well" style="opacity:.6;overflow:hidden;">
+        {%if session.logged_in %}
+        <h3 style="margin-left:5px">Hi, <a href="#">{{ session.username }}!</a>&nbsp;&nbsp;Total:&nbsp;
+          <span style="color:green">{% if session.total %}{{ session.total }}{% else %}0{% endif %}</span> RMB<h3>
+        {% else %}
+        <h3 style="margin-left:5px">Please <a href="/signin">sign in!</a></h3>
+        {% endif %}
+        <a href="/shopcart"><img src="../static/img/shopcart.png" alt="shopcart" style="float:left"></a>
+        {%if session.logged_in %}
+        <a href="/shopmanager"><button class="btn" style="margin:5px;margin-top:25px"><i class="icon-shopping-cart"></i> Shopcart</button></a>
+        <a href=""><button class="btn" style="margin:3px"><i class="icon-pencil"></i> Checkout</button></a>
+        {% endif %}
+    </div>
+  <div>
+</div>
+
+<script type="text/javascript">
+  document.body.onload = function() {
+    document.getElementById("li-shop").className = "active"; 
+  }
+</script>
+{% endblock body %}

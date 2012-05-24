@@ -1,0 +1,37 @@
+{% extends "basic.html" %}
+{% block status %}
+{% if session.logged_in %}
+<ul class="nav pull-right">
+  <li><a href="#" style="fontsize:20px">{{ session.username }}</a></li>
+  <li><a href="/signout">Sign out</a></li>
+</ul>
+{% else %}
+<ul class="nav pull-right">
+  <li><a href="/signin">Sign in</a></li>
+  <li><a href="/register">Register</a></li>
+</ul>
+{% endif %}
+{% endblock status %}
+
+
+{% block name %}
+{% if session.logged_in %}
+Hi, <a href="#">{{ session.username }}.</a>
+{% endif %}
+{% endblock name %}
+
+
+{% block body %}
+<div class="container">
+  <div class="btn-group" data-toggle="buttons-radio" style="margin-bottom:25px">
+      <a href="/shop?sort=shopstar"><button class="btn btn-success"><i class="icon-heart"></i> Loves</button></a>
+      <a href="/shop?sort=shopname"><button class="btn btn-warning"><i class="icon-fire"></i> Alphabetically</button></a>
+      <a href="/shop?sort=shopprice"><button class="btn btn-danger"><i class="icon-thumbs-up"></i> Price</button></a>
+  </div>
+</div>
+<script type="text/javascript">
+  document.body.onload = function() {
+    document.getElementById("li-home").className = "active"; 
+  }
+</script>
+{% endblock body %}
